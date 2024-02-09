@@ -1,1 +1,1 @@
-web: gunicorn pecs.wsgi --log-file -
+web: python manage.py migrate && gunicorn pecs.wsgi
