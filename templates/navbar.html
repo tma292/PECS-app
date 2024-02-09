@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://kit.fontawesome.com/190b22e629.js" crossorigin="anonymous"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/190b22e629.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" type="text/javascript"></script>
+    <style>
+body {
+  font-family: "Poppins";
+  margin: 0px;
+}
+button {
+    font-family: Poppins;
+}
+input{
+    font-family: Poppins;
+}
+.sidebar-title {
+  font-size: 25px;
+  font-weight: bold;
+  color: #8FB108;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+}
+
+.navbar{
+  display: flex;
+  height: 100px;
+  border-bottom: 1px solid;
+  border-color: rgba(0, 0, 0, 0.20);
+  overflow: hidden;
+}
+
+.search-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.search-input{
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.20);
+  border-radius: 25px 0px 0px 25px;
+  border-right: none;
+  padding: 5px;
+}
+
+.search-button{
+  width: 50px;
+  height: 39px;
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.20);
+  background: #fff;
+  border-radius: 0px 25px 25px 0px;
+  border-left: none;
+  color: #2F2E41;
+  cursor: pointer;
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50px;
+  transition: margin-left .5s;
+}
+
+.nav-link{
+  color: #2F2E41;
+}
+
+.active-link{
+  color: #8FB108;;
+}
+
+.side-button{
+    background-color: #8FB108;
+    border: none;
+    border-radius: 0px 20px 20px 0px;
+    width: 30px;
+    height: 60px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+}
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  border-right: 1px solid;
+  border-color: rgba(0, 0, 0, 0.20);
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #8FB108;
+}
+
+#main {
+  transition: margin .5s;
+  margin-left: 35px;
+  margin-right: 35px;
+}
+
+.sidebar-list {
+
+}
+.sidebar-list i {
+  font-size:30px;
+  transition: 0.3s;
+}
+
+.sidebar-list span {
+}
+.sidenav a {font-size: 18px;}
+.sidenav {padding-top: 15px;}
+
+    .sidenav-right {
+      height: 100%;
+      width: 0px;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      background-color: #fff;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      border-left: 1px solid;
+      border-color: rgba(0, 0, 0, 0.20);
+    }
+    .sidenav-right-content {
+        margin: 20px;
+        position: absolute;
+        top: 20%;
+        transition: 0.3s;
+    }
+    .cancel {
+    border: none;
+    background-color: #fff;
+    font-family: "Poppins";
+    font-size: 15px;
+    cursor: pointer;
+    }
+    .submit {
+    border: 1px solid rgba(0, 0, 0, 0.20);
+    border-radius: 60px;
+    background-color: #8FB108;
+    font-family: "Poppins";
+    font-size: 15px;
+    cursor: pointer;
+    color: #fff;
+    width: 80px;
+    height: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="navbar">
+    <div style="height:100%; width: 250px;" class="sidebar-title">
+        <a>AutismSpeaks</a>
+    </div>
+
+    <form class="search-container" method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+        <input class="search-input" style="width: 280px;height: 27px;" type="text" name="searched" placeholder="Search">
+        <button class="search-button" name="search-button" value="srcbttn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </form>
+</div>
+
+<div id="mySidenav" class="sidenav">
+    <!--  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+    <div class="sidebar-title">
+        <span>AutismSpeaks</span>
+    </div>
+    <div class="sidebar-list" id="menu">
+        <a href="{% url 'board' %}" class = "nav-link {% if current_path == '/' %}active-link{% endif %}">
+            <i class="fa-regular fa-keyboard"></i>
+            <span>Board</span>
+        </a>
+
+        <a href="{% url 'library' %}" class = "nav-link {% if current_path == '/library' %}active-link{% endif %}">
+            <i class="fa-solid fa-grip"></i>
+            <span>Library</span>
+        </a>
+        <a href="#" class="nav-link">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Progress Tracking</span>
+        </a>
+        <a href="{% url 'settings' %}" class="nav-link {% if current_path == '/settings' %}active-link{% endif %}">
+            <i class="fa-solid fa-sliders"></i>
+            <span>Settings</span>
+        </a>
+    </div>
+</div>
+<div id="mySidebarRight" class="sidenav-right">
+    <div class="sidenav-right-content">
+        <div id="folder-form">
+            {% include 'add_folder_form.html' %}
+        </div>
+        <div id="image-form">
+            {% include 'add_image_form.html' %}
+        </div>
+    </div>
+</div>
+<div style="position:fixed;" id="sidebar" class="sidebar">
+    <button class="side-button" style="cursor:pointer" onclick="openNav()"></button>
+</div>
+<div id="main">
+    {% block content %}
+
+    {% endblock content %}
+</div>
+</body>
+<script>
+function ifOpen(){
+    if (document.getElementById("mySidenav").style.width != "250px"){
+      return false;
+    }else{
+      return true;
+    }
+}
+function openNav() {
+  if(!ifOpen()){
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "285px";
+    document.getElementById("sidebar").style.marginLeft = "250px";
+  }
+  else {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "32px";
+    document.getElementById("sidebar").style.marginLeft = "0";
+  }
+}
+</script>
+</html>

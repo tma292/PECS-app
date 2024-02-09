@@ -1,0 +1,54 @@
+{% extends 'navbar.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<h3>Voice Choices</h3>
+<div>
+  <label for="names">Choose a speaker:</label>
+  <select id="names" name="names" onchange="revealAudio()">
+    <option value="Jenny">Jenny</option>
+    <option value="Tony">Tony</option>
+    <option value="Guy">Guy</option>
+    <option value="Monica">Monica</option>
+  </select>
+</div>
+
+<div style="margin:20px">
+  <audio controls id="audio" style="display: none;">
+    <source src="" type="audio/mpeg" id="audioSource">
+    Your browser does not support the audio element.
+  </audio>
+</div>
+
+<form method = "GET"  style="margin:20px">
+  {% csrf_token %}
+  <button id ="voiceselect" onclick="saveSelectedOption()" type="submit" class="submit" name="voice_choice" value="">Save</button>
+</form>
+
+
+  <script>
+    function revealAudio() {
+      var dropdown = document.getElementById("names");
+      var selectedOption = dropdown.options[dropdown.selectedIndex].value;
+      var audio = document.getElementById("audio");
+      var audioSource = document.getElementById("audioSource");
+
+      if (selectedOption === "") {
+        audio.style.display = "none";
+      } else {
+        audio.style.display = "block";
+        // You can adjust this path based on your file structure
+        audioSource.src = "/static/audio/"+selectedOption + ".mp3"; // Assumes audio files are named after the options (e.g., jenny.mp3)
+        audio.load();
+        audio.play();
+      }
+    }
+
+    function saveSelectedOption() {
+      var dropdown = document.getElementById("names");
+      var selectedOption = dropdown.options[dropdown.selectedIndex].value;
+      document.getElementById("voiceselect").value = selectedOption;
+      // You can do further processing with the selected option value here
+    }
+  </script>
+
+{% endblock content %}

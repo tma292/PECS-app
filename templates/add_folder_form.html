@@ -1,0 +1,20 @@
+{% load widget_tweaks %}
+<h2>Add Folder</h2>
+<form method="POST">
+  {% csrf_token %}
+  <div class="form-group">
+    <label>Folder Name</label><br>
+    {% render_field folderForm.name autocomplete="off"%}
+  </div>
+  <br><br>
+  <div class="form-group">
+    <button type="submit" class="submit">Submit</button>
+    <button onclick="closeNav()" class="cancel">Cancel</button>
+  </div>
+</form>
+<script>
+  function closeNav(){
+    document.getElementById("mySidebarRight").style.width = "0px";
+    document.getElementById("main").style.marginRight= "35px";
+  }
+</script>

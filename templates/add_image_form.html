@@ -1,0 +1,38 @@
+{% load widget_tweaks %}
+<h2>Add Card</h2>
+{% include '_messages.html'%}
+<form enctype='multipart/form-data' method="POST">
+  {% csrf_token %}
+  <div class="form-group">
+    <label>Image Label</label><br>
+    {% render_field imageForm.label autocomplete="off"%}
+  </div>
+  <div class="form-group">
+    <label>Image Category</label><br>
+    {% render_field imageForm.category autocomplete="off"%}
+  </div>
+  <div class="form-group">
+    <label>Image File</label><br>
+    {% render_field imageForm.image autocomplete="off"%}
+  </div>
+  <div class="form-group">
+    <label>Audio File</label><br>
+    {% render_field imageForm.audio autocomplete="off"%}
+  </div>
+  <div class="form-group">
+    <label>Public</label>
+    {% render_field imageForm.public autocomplete="off"%}
+  </div>
+  <br><br>
+  <div class="form-group">
+    <button type="submit" class="submit">Submit</button>
+    <button onclick="closeNav()" class="cancel">Cancel</button>
+  </div>
+</form>
+
+<script>
+  function closeNav(){
+    document.getElementById("mySidebarRight").style.width = "0px";
+    document.getElementById("main").style.marginRight= "35px";
+  }
+</script>

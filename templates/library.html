@@ -1,0 +1,152 @@
+{% extends 'navbar.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<style>
+    .add-button-container{
+        position: fixed;
+        bottom: 0;
+        align-self: center;
+    }
+
+    .add-button{
+        border-radius: 25px;
+        border-color: rgba(0, 0, 0, 0.20);
+        background-color: #fff;
+        text-align: center;
+        width: 167px;
+        height: 45px;
+        margin: 15px 15px 30px 15px;
+        color: #FF166A;
+        cursor:pointer
+
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0px 0px 100px 0px;
+    }
+
+    .card {
+      flex-basis: calc(20% - 25px); /* Set the width of each card to one-third of the container minus some margin */
+      margin: 10px;
+      padding: 5px;
+      box-sizing: border-box;
+      border: 1px solid;
+      border-color: rgba(0, 0, 0, 0.20);
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .card-text {
+      font-weight: bold;
+      text-decoration: none;
+      color: #1E1E1E;
+      bottom: 0;
+    }
+
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0px 0px 20px 0px;
+
+    }
+
+    .button {
+	  padding: 5px 30px 5px 30px;
+      margin: 10px;
+      box-sizing: border-box;
+      border: 1px solid rgba(0, 0, 0, 0.20);
+      border-radius: 60px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      color: #fff;
+    }
+</style>
+
+<h1 style="margin: 15px">Library</h1>
+
+<div class="button-container">
+    <button class="button" style="background-color: #8FB108">ALL</button>
+    <button class="button" style="background-color: #1BBFE4">MY CARDS</button>
+    <button class="button" style="background-color: #fff; color: #8B16FF">RECENTLY USED</button>
+</div>
+
+<div class="card-container">
+{% for category in categories %}
+    <div class="card">
+        <div class="card-block">
+            <div class="card-images">
+                {% for key, value in images.items %}
+                    {% if key == category  %}
+                        {% if value %}
+                            {% for item in value %}
+                                {% for k, v in item.items %}
+                            <a href="/category/{{category.name}}/{{category.id}}">
+                                <img style="height: 190px; width: 190px; object-fit: cover;" src="/static/{{v}}">
+                            </a>
+                                {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            <a href="/category/{{category.name}}/{{category.id}}">
+                                <img style="height: 200px; width: 200px; object-fit: cover;" src="/static/library/no_image.png">
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <a href="/category/{{category.name}}/{{category.id}}" style="bottom: 0;" class="card-text"><h5>{{category.name}}</h5></a>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+
+<div style="  display: flex; justify-content: center;">
+    <div class="add-button-container">
+        <button id="add-folder" class="add-button" onclick="openNavRight('folder')">ADD FOLDER</button>
+        <button id="add-image" class="add-button" onclick="openNavRight('image')">ADD CARD</button>
+    </div>
+</div>
+
+<script>
+function ifOpenRight(){
+    if (document.getElementById("mySidebarRight").style.width != "250px"){
+      return false;
+    }else{
+      return true;
+    }
+}
+function openNavRight(form) {
+  if(!ifOpenRight()){
+    document.getElementById("mySidebarRight").style.width = "250px";
+    document.getElementById("main").style.marginRight = "250px";
+    if(form == 'folder'){
+        document.getElementById("folder-form").style.display = "block";
+        document.getElementById("image-form").style.display = "none";
+    }
+    else {
+        document.getElementById("folder-form").style.display = "none";
+        document.getElementById("image-form").style.display = "block";
+    }
+  }
+  else {
+    if((form == 'folder') && (document.getElementById("folder-form").style.display == "none")) {
+        document.getElementById("folder-form").style.display = "block";
+        document.getElementById("image-form").style.display = "none";
+    }
+    else if((form == 'image') && (document.getElementById("image-form").style.display == "none")) {
+        document.getElementById("folder-form").style.display = "none";
+        document.getElementById("image-form").style.display = "block";
+    }
+    else {
+        document.getElementById("mySidebarRight").style.width = "0px";
+        document.getElementById("main").style.marginRight= "35px";
+    }
+  }
+}
+
+</script>
+{% endblock content %}

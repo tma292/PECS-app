@@ -1,0 +1,291 @@
+{% extends 'navbar.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<style>
+        body {
+            font-family: "Poppins";
+            margin: 0px;
+        }
+        sentence_bar {
+            position: fixed;
+            bottom: 0px;
+            right: -560px;
+        }
+        stripe1 {position: fixed; bottom: 230px; right: 1200px;}
+        stripe2 {position: fixed; bottom: 230px; right: 950px;}
+        stripe3 {position: fixed; bottom: 230px; right: 700px;}
+        stripe4 {position: fixed; bottom: 230px; right: 450px;}
+        stripe5 {position: fixed; bottom: 230px; right: 200px;}
+        app_name {
+            position: fixed;
+            bottom: 620px;
+            right: 1200px;
+        }
+        app_name2{
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        pecs {
+            position: fixed;
+            bottom: 550px;
+            right: 1235px;
+        }
+        form3 {
+            position: fixed;
+            bottom: 640px;
+            right: 700px;
+        }
+        user_name {
+            position: fixed;
+            bottom: 620px;
+            right: 200px;
+        }
+        topline {
+            position: fixed;
+            bottom: 590px;
+            right: 0px;
+        }
+        .audio_button_box{
+            position: fixed;
+            bottom: 30px;
+            right: 100px;
+            z-index: 1;
+        }
+        .delete_button_box{
+            position: fixed;
+            bottom: 90px;
+            right: 100px;
+            z-index: 1;
+        }
+        .photo_button{
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .bt{
+            width: 50px;
+            height: 45px;
+            background-color: rgb(143, 177, 8);
+            cursor: pointer;
+        }
+        .bt img{
+            display: block;
+        }
+        .photo_bt{
+            position: fixed;
+            bottom: 630px;
+            right: 50px;
+            border: none;
+            padding: 1px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .photo_bt img{
+            border-radius: 50%;
+            display: block;
+        }
+        .search{
+            position: fixed;
+            bottom: 635px;
+            right: 700px;
+            float:right;
+            margin:0px;
+        }
+        .search input[type=text]{
+            width:350px;
+            height:40px;
+            border-radius:25px;
+            border: 1px solid grey;
+        }
+        .search button{
+            position: fixed;
+            bottom: 640px;
+            right: 705px;
+            background-color: #FFFFFF;
+            float: right;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        stripe_place{position: fixed; bottom: 450px; right: 1150px;}
+        stripe_place1{position: fixed; bottom: 350px; right: 1150px;}
+        stripe_place2{position: fixed; bottom: 250px; right: 1150px;}
+        stripe_place3{position: fixed; bottom: 450px; right: 900px;}
+        stripe_place4{position: fixed; bottom: 350px; right: 900px;}
+        stripe_place5{position: fixed; bottom: 250px; right: 900px;}
+        stripe_place6{position: fixed; bottom: 450px; right: 650px;}
+        stripe_place7{position: fixed; bottom: 350px; right: 650px;}
+        stripe_place8{position: fixed; bottom: 250px; right: 650px;}
+        stripe_place9{position: fixed; bottom: 450px; right: 400px;}
+        stripe_place10{position: fixed; bottom: 350px; right: 400px;}
+        stripe_place11{position: fixed; bottom: 250px; right: 400px;}
+        stripe_place12{position: fixed; bottom: 450px; right: 150px;}
+        stripe_place13{position: fixed; bottom: 350px; right: 150px;}
+        stripe_place14{position: fixed; bottom: 250px; right: 150px;}
+
+        place1{position: fixed; bottom: 30px; right: 1250px;}
+        place2{position: fixed; bottom: 30px; right: 1100px;}
+        place3{position: fixed; bottom: 30px; right: 950px;}
+        place4{position: fixed; bottom: 30px; right: 800px;}
+        place5{position: fixed; bottom: 30px; right: 650px;}
+        place6{position: fixed; bottom: 30px; right: 500px;}
+        place7{position: fixed; bottom: 30px; right: 350px;}
+        place8{position: fixed; bottom: 30px; right: 200px;}
+
+        #div, #div1, #div2, #div3, #div4, #div5, #div6, #div7, #div8, #stripe_div, #stripe_div1,
+        #stripe_div2, #stripe_div3, #stripe_div4, #stripe_div5, #stripe_div6, #stripe_div7,
+        #stripe_div8, #stripe_div9, #stripe_div10, #stripe_div11, #stripe_div12, #stripe_div13,
+        #stripe_div14 {
+            float: left;
+            width: 100px;
+            height: 80px;
+            margin: 10px;
+            padding: 5px;
+<!--            border: 1px solid black;-->
+            }
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #2F2E41;
+            display: block;
+            transition: 0.3s;
+            margin-top:20px;
+        }
+        .sidenav a:hover {
+            color: rgb(143, 177, 8);
+        }
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
+        .openbt{
+            background-color: #8FB108;
+            border: none;
+            border-radius: 0px 20px 20px 0px;
+            width: 30px;
+            height: 60px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+        .logoutbt{
+            width: 100px;
+            height: 60px;
+            cursor: pointer;
+            background-color: #ffffff;
+            border: 0px;
+            color: #ff0000;
+        }
+    </style>
+<h2>add image</h2>
+<stripe1>
+    <svg width="30" height="320">
+        <rect width="30" height="320"
+        style="fill:#EAEAEA; stroke:#8FB108; stroke-width:1; fill-opacity:1; stroke-opacity:1" />
+    </svg>
+</stripe1>
+<stripe2>
+    <svg width="30" height="320">
+        <rect width="30" height="320"
+        style="fill:#EAEAEA; stroke:#8FB108; stroke-width:1; fill-opacity:1; stroke-opacity:1" />
+    </svg>
+</stripe2>
+<stripe3>
+    <svg width="30" height="320">
+        <rect width="30" height="320"
+        style="fill:#EAEAEA; stroke:#8FB108; stroke-width:1; fill-opacity:1; stroke-opacity:1" />
+    </svg>
+</stripe3>
+<stripe4>
+    <svg width="30" height="320">
+        <rect width="30" height="320"
+        style="fill:#EAEAEA; stroke:#8FB108; stroke-width:1; fill-opacity:1; stroke-opacity:1" />
+    </svg>
+</stripe4>
+<stripe5>
+    <svg width="30" height="320">
+        <rect width="30" height="320"
+        style="fill:#EAEAEA; stroke:#8FB108; stroke-width:1; fill-opacity:1; stroke-opacity:1" />
+    </svg>
+</stripe5>
+    <sentence_bar>
+    <svg width="2000" height="170">
+        <rect x="50" y="20" rx="20" ry="20" width="1300" height="140"
+        style="fill:rgb(255,255,255);stroke:rgb(143, 177, 8);stroke-width:5;fill-opacity:0; stroke-opacity:0.5" />
+    </svg>
+</sentence_bar>
+<!--buttons on sentence bar-->
+<div class="audio_button_box">
+    <button type="button" class="bt">
+        <img src="audio.png" width="40">
+    </button>
+</div>
+<div class="delete_button_box">
+    <button  id="deleteButton" type="button"  class="bt">
+        <img src="delete.png" width="30">
+    </button>
+</div>
+<!--drag and drop of images-->
+<stripe_place>
+    <div id="stripe_div" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img border= 1px solid black id="imageElement" src="/static/library/orange.jpg" draggable="true" ondragstart="drag(event)" id="drag1" width="100" height="80">
+    </div>
+</stripe_place>
+<stripe_place1>
+    <div id="stripe_div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img border= 1px solid black id="imageElement1" src="/static/library/apple.jpg" draggable="true" ondragstart="drag(event)" id="drag2" width="100" height="80">
+    </div>
+</stripe_place1>
+<stripe_place2>
+    <div id="stripe_div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img border= 1px solid black id="imageElement2" src="/static/library/cat.jpg" draggable="true" ondragstart="drag(event)" id="drag3" width="100" height="80">
+    </div>
+</stripe_place2>
+<stripe_place3><div id="stripe_div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place3>
+<stripe_place4><div id="stripe_div4" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place4>
+<stripe_place5><div id="stripe_div5" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place5>
+<stripe_place6><div id="stripe_div6" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place6>
+<stripe_place7><div id="stripe_div7" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place7>
+<stripe_place8><div id="stripe_div8" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place8>
+<stripe_place9><div id="stripe_div9" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place9>
+<stripe_place10><div id="stripe_div10" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place10>
+<stripe_place11><div id="stripe_div11" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place11>
+<stripe_place12><div id="stripe_div12" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place12>
+<stripe_place13><div id="stripe_div13" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place13>
+<stripe_place14><div id="stripe_div14" ondrop="drop(event)" ondragover="allowDrop(event)"></div></stripe_place14>
+
+<place1><div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div></place1>
+<place2><div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div></place2>
+<place3><div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div></place3>
+<place4><div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)"></div></place4>
+<place5><div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)"></div></place5>
+<place6><div id="div6" ondrop="drop(event)" ondragover="allowDrop(event)"></div></place6>
+<place7><div id="div7" ondrop="drop(event)" ondragover="allowDrop(event)"></div></place7>
+<place8><div id="div8" ondrop="drop(event)" ondragover="allowDrop(event)"></div></place8>
+
+
+{% endblock content %}

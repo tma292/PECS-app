@@ -1,0 +1,311 @@
+{% extends 'navbar.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<style>
+:root {
+  --item-width: 100px;
+  --item-height: 110px;
+  --column-width: 200px;
+}
+.board {
+  flex-wrap: wrap;
+  margin-left: 15px;
+  justify-content: center;
+  display: none;
+}
+.board.active{
+  display: flex;
+}
+.card-img-top {
+        width:80px;
+        height:80px;
+        object-fit: cover;
+        user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.column {
+  background-color: #EAEAEA;
+  height: 350px;
+  flex-basis: calc(10% - 15px);
+  border: 1px dotted #8FB108;
+  border-radius: 5px;
+  margin-right: 30px;
+  padding: 5px;
+  overflow:auto;
+}
+
+.board-column-header {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  cursor: move;
+}
+
+.board-item {
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.20);
+      border-radius: 5px;
+      text-align: center;
+      background-color:#fff;
+  cursor: move;
+  margin: 0.5em;
+  width: var(--item-width);
+  height: var(--item-height);
+}
+
+.board-item-content {
+  pointer-events: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.placeholder {
+  background-color: white;
+  margin-bottom: 0.5em;
+  width: var(--item-width);
+  height: var(--item-height);
+}
+
+.emptySectionHiddenLesson {
+  background: none;
+  border: none;
+  width: var(--item-width);
+  height: var(--item-height);
+}
+
+.placeholder-column {
+  background-color: white;
+  width: var(--column-width);
+  border: none;
+  margin-right: 20px;
+  padding: 5px;
+}
+.container {
+  margin: 15px 0px 0px 0px;
+}
+.sentence-bar {
+  flex-basis: calc(20% - 10px);
+  height: 130px;
+  border: solid 5px;
+  border-color:#8FB108;
+  margin: 0px;
+}
+.tab-container {
+  display: flex;
+}
+.tab-button {
+  background-color: #8FB108;
+  height: 40px;
+  width: 200px;
+  font-style: normal;
+  font-weight: 400;
+  font-family: "Poppins";
+  font-size: 20px;
+  color: #fff;
+  border-radius: 20px 20px 0px 0px;
+  border: 1px solid rgba(0, 0, 0, 0.20);;
+}
+.add-tab-button {
+  background-color: #8FB108;
+  height: 40px;
+  width: 200px;
+  font-style: normal;
+  font-weight: 400;
+  font-family: "Poppins";
+  font-size: 20px;
+  color: #fff;
+  border-radius: 20px 20px 0px 0px;
+  border: 1px solid rgba(0, 0, 0, 0.20);
+}
+.tab-button:hover {
+    filter: brightness(80%);
+}
+.add-tab-button:hover {
+    filter: brightness(80%);
+}
+.tab-button.active{
+    filter: brightness(80%);
+}
+.board-buttons{
+    width: 50px;
+    height: 100%;
+    float:right;
+}
+.board-button {
+    background-color: #8FB108;
+    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.20);
+    cursor: pointer;
+    font-size: 25px;
+    height: 40px;
+    width: 40px;
+    margin-top: 15px;
+}
+</style>
+<script>
+    $(document).on('click', '.draggable', function(){
+           var element = this;
+           var elementPosition = false;
+           $(this).parent().find('.draggable').each(function(position, item){
+               if (item === element) {
+                   elementPosition = position;
+               }
+           });
+           if (elementPosition !== false) {
+               console.log('Element position: ' + elementPosition);
+           }
+       })
+</script>
+{% load static %}
+{% for b in board %}
+<h1 style="margin: 15px">{{b.name}}</h1>
+{% endfor %}
+
+<div id="wrapper"  class="content-list">
+    {% for tab in tabs %}
+<div class="board {% if forloop.first %}active{% endif %}">
+    <div class="column" style="overflow:auto;" >
+        <div class="board-column-content-wrapper">
+            {% for t in tabs_img %}
+            {% if tab.id == t.id %}
+            {% for i in imgs %}
+            {% if i.id == t.images %}
+            <div class="board-item draggable">
+                <div class="card">
+                    <img class="card-img-top" src='/static/{{i.image}}'>
+                    <div class="card-block">
+                        <span class="card-title" value="{{i.label}}">{{i.label}}</span>
+                    </div>
+                    {% if i.audio != null%}
+                    <div class="sounds" style="display: none;">
+                        <audio controls>
+                            <source src="/static{{ i.audio.url }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="column" style="overflow:auto;">
+        <div class="board-column-content-wrapper">
+        </div>
+    </div>
+    <div class="column" style="overflow:auto;">
+        <div class="board-column-content-wrapper">
+        </div>
+    </div>
+    <div class="column" style="overflow:auto;">
+        <div class="board-column-content-wrapper">
+        </div>
+    </div>
+    <div class="column" style="overflow:auto;">
+        <div class="board-column-content-wrapper">
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+
+<div class="container">
+    <div class="tab-list tab-container">
+    {% for t in tabs %}
+    <div class="tab">
+    <button class="tab-button {% if forloop.first %}active{% endif %}" style="cursor:pointer" onclick="">{{t.name}}</button>
+    </div>
+    {% endfor %}
+<!--    <div class="tab">-->
+<!--    <button class="add-tab-button" style="cursor:pointer">Add Tab</button>-->
+<!--    </div>-->
+</div>
+</div>
+<div class="sentence-bar-container" id="sounds">
+    <div style="background-color:#fff;" class="column sentence-bar">
+        <div class="board-buttons">
+            <a href="{% url 'board'%}">
+                <button id="input_form" class="board-button"><i class="fa-solid fa-xmark"></i></button>
+            </a>
+
+            <button id="play-all" class="board-button" onclick="clickBtn()"><i class="fa-solid fa-play"></i></button>
+        </div>
+        <div style="display:flex; flex-wrap: wrap;" class="board-column-content-wrapper">
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    function clickBtn() {
+
+        const sounds = document.querySelectorAll("#sounds span");
+        let txt = "";
+        for (const sound of sounds) {
+          txt += sound.textContent + " ";
+        }
+
+          $.ajax({
+            url: "{% url 'call_play_sound' %}",
+            method: 'GET',
+            data: {"input_data": txt},
+            dataType: "text",
+            contentType: "application/json",
+            beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+              }
+            },
+            error: function(xhr, status, error) {
+              console.log("error")
+            }
+          })
+          .done(function(data) {
+            console.log("Success");
+          });
+
+          // csrf_Used to get token
+          function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+                }
+              }
+            }
+            return cookieValue;
+          }
+
+          //Csrf in header_Function that grants token
+          function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+          };
+        }
+</script>
+
+    <script src="{% static 'script/dnd.js' %}"></script>
+    <script src="{% static 'script/dnd-items.js' %}"></script>
+    <script src="{% static 'script/dnd-columns.js' %}"></script>
+    <script src="{% static 'script/tab-content.js' %}"></script>
+{% endblock content %}
